@@ -75,14 +75,66 @@ def print_level_wise(root):
         else:
             print("R -> None",sep = ",")
         print("\n")
+def height(root):
+    if root ==None:
+        return 0
+    leftHeight = height(root.left)
+    rightHeight = height(root.right)
     
-root = take_input_levelwise()
+    heightOfTree=1+max(leftHeight,rightHeight)
+    return heightOfTree
+    
+def diameter_of_a_tree(root):
+    if root == None:
+        return 0
+    leftHeight = height(root.left)
+    rightHeight = height(root.right)
+    
+    leftDiameter = diameter_of_a_tree(root.left)
+    rightDiameter = diameter_of_a_tree(root.right)
+    
+    ans = max(leftDiameter,rightDiameter,leftHeight+rightHeight)
+    return ans
+    
+    
+#root = take_input_levelwise()
 
 # print_binary_tree(root)   
 
 # root = BinaryTreeNode(1)
 # root.left = BinaryTreeNode(2)
 # root.right = BinaryTreeNode(3)
-print_level_wise(root)
+# print_level_wise(root)
 # # print_binary_tree(root)
 
+root1 = BinaryTreeNode(1)
+root1.left = BinaryTreeNode(2)
+root1.right = BinaryTreeNode(3)
+root1.left.left = BinaryTreeNode(4)
+root1.left.right = BinaryTreeNode(5)
+root1.right.right = BinaryTreeNode(6)
+
+# Tree 2: Slightly complex tree with height 4
+root2 = BinaryTreeNode(10)
+root2.left = BinaryTreeNode(20)
+root2.right = BinaryTreeNode(30)
+root2.left.left = BinaryTreeNode(40)
+root2.left.right = BinaryTreeNode(50)
+root2.right.left = BinaryTreeNode(60)
+root2.right.right = BinaryTreeNode(70)
+root2.left.left.left = BinaryTreeNode(80)
+
+# Tree 3: More complex tree with height 5
+root3 = BinaryTreeNode(100)
+root3.left = BinaryTreeNode(200)
+root3.right = BinaryTreeNode(300)
+root3.left.left = BinaryTreeNode(400)
+root3.left.right = BinaryTreeNode(500)
+root3.right.left = BinaryTreeNode(600)
+root3.right.right = BinaryTreeNode(700)
+root3.left.left.left = BinaryTreeNode(800)
+root3.left.left.right = BinaryTreeNode(900)
+root3.right.right.left = BinaryTreeNode(1000)
+root3.right.right.right = BinaryTreeNode(1100)
+print_binary_tree(root1)
+print(diameter_of_a_tree(root3))
