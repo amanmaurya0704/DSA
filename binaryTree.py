@@ -119,7 +119,65 @@ def isBalanced_optimised(root):
     current_balanced = abs(leftHeight - rightHeight)<=1 and leftIsbalanced and rightIsbalanced
     
     return current_balanced,curretHeight
+
+def preorder_traversal(root):
+    if root == None:
+        return
+    print(root.data,end = ",")
+    preorder_traversal(root.left)
+    preorder_traversal(root.right)    
     
+def postorder_traversal(root):
+    if root == None:
+        return
+    postorder_traversal(root.left)
+    postorder_traversal(root.right)
+    print(root.data,end=",")
+    
+def inorder_traversal(root):
+    if root == None:
+        return
+    inorder_traversal(root.left)
+    print(root.data,end = ",")
+    inorder_traversal(root.right)
+    
+def construct_BT_from_preorder_inorder(inorder,preorder,inS,inE,preS,preE):
+    if(inS>inE or preS>preE):
+        return None
+    
+    root_data = preorder[preS]
+    root = BinaryTreeNode(root_data)
+    
+    inorder_root_index=-1
+    for i in range(inS,inE+1):
+        if inorder[i] == root_data:
+            inorder_root_index=i
+            break
+    if(inorder_root_index==-1):
+        print("root not founr in inorder,please check logic")
+        return None
+    
+    linS = inS
+    linE = inorder_root_index-1
+    lpreS = preS+1
+    lpreE = linE-linS + lpreS
+    
+    
+    rinE = inE
+    rpreS = lpreE + 1
+    rpreE =preE 
+    rinS = inorder_root_index+1
+    
+    root.left = construct_BT_from_preorder_inorder(inorder,preorder,linS,linE,lpreS,lpreE)
+    root.right = construct_BT_from_preorder_inorder(inorder,preorder,rinS,rinE,rpreS,rpreE)
+    
+    return root
+
+preorder = [1,2,4,5,3,6]
+inorder = [4,2,5,1,3,6]
+n = len(inorder)
+root = construct_BT_from_preorder_inorder(inorder,preorder,0,n-1,0,n-1)
+print_level_wise(root)
     
     
 #root = take_input_levelwise()
@@ -132,42 +190,47 @@ def isBalanced_optimised(root):
 # print_level_wise(root)
 # # print_binary_tree(root)
 
-root = BinaryTreeNode(1)
-root.left = BinaryTreeNode(2)
-root.right = BinaryTreeNode(3)
-root.left.left = BinaryTreeNode(4)
-root.left.right = BinaryTreeNode(5)
-root.left.left.left = BinaryTreeNode(8)
+# root = BinaryTreeNode(1)
+# root.left = BinaryTreeNode(2)
+# root.right = BinaryTreeNode(3)
+# root.left.left = BinaryTreeNode(4)
+# root.left.right = BinaryTreeNode(5)
+# root.left.left.left = BinaryTreeNode(8)
 
-root1 = BinaryTreeNode(1)
-root1.left = BinaryTreeNode(2)
-root1.right = BinaryTreeNode(3)
-root1.left.left = BinaryTreeNode(4)
-root1.left.right = BinaryTreeNode(5)
-root1.right.right = BinaryTreeNode(6)
+# root1 = BinaryTreeNode(1)
+# root1.left = BinaryTreeNode(2)
+# root1.right = BinaryTreeNode(3)
+# root1.left.left = BinaryTreeNode(4)
+# root1.left.right = BinaryTreeNode(5)
+# root1.right.right = BinaryTreeNode(6)
 
-# Tree 2: Slightly complex tree with height 4
-root2 = BinaryTreeNode(10)
-root2.left = BinaryTreeNode(20)
-root2.right = BinaryTreeNode(30)
-root2.left.left = BinaryTreeNode(40)
-root2.left.right = BinaryTreeNode(50)
-root2.right.left = BinaryTreeNode(60)
-root2.right.right = BinaryTreeNode(70)
-root2.left.left.left = BinaryTreeNode(80)
+# # Tree 2: Slightly complex tree with height 4
+# root2 = BinaryTreeNode(10)
+# root2.left = BinaryTreeNode(20)
+# root2.right = BinaryTreeNode(30)
+# root2.left.left = BinaryTreeNode(40)
+# root2.left.right = BinaryTreeNode(50)
+# root2.right.left = BinaryTreeNode(60)
+# root2.right.right = BinaryTreeNode(70)
+# root2.left.left.left = BinaryTreeNode(80)
 
-# Tree 3: More complex tree with height 5
-root3 = BinaryTreeNode(100)
-root3.left = BinaryTreeNode(200)
-root3.right = BinaryTreeNode(300)
-root3.left.left = BinaryTreeNode(400)
-root3.left.right = BinaryTreeNode(500)
-root3.right.left = BinaryTreeNode(600)
-root3.right.right = BinaryTreeNode(700)
-root3.left.left.left = BinaryTreeNode(800)
-root3.left.left.right = BinaryTreeNode(900)
-root3.right.right.left = BinaryTreeNode(1000)
-root3.right.right.right = BinaryTreeNode(1100)
+# # Tree 3: More complex tree with height 5
+# root3 = BinaryTreeNode(100)
+# root3.left = BinaryTreeNode(200)
+# root3.right = BinaryTreeNode(300)
+# root3.left.left = BinaryTreeNode(400)
+# root3.left.right = BinaryTreeNode(500)
+# root3.right.left = BinaryTreeNode(600)
+# root3.right.right = BinaryTreeNode(700)
+# root3.left.left.left = BinaryTreeNode(800)
+# root3.left.left.right = BinaryTreeNode(900)
+# root3.right.right.left = BinaryTreeNode(1000)
+# root3.right.right.right = BinaryTreeNode(1100)
 # print_binary_tree(root1)
-# print(diameter_of_a_tree(root3))
-print(isBalanced_optimised(root))
+# # print(diameter_of_a_tree(root3))
+# #print(isBalanced_optimised(root))
+# preorder_traversal(root1)
+# print("\n")
+# postorder_traversal(root1)
+# print("\n")
+# inorder_traversal(root1)
