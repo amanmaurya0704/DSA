@@ -95,6 +95,31 @@ def diameter_of_a_tree(root):
     
     ans = max(leftDiameter,rightDiameter,leftHeight+rightHeight)
     return ans
+
+def isbalanced(root):
+    if root == None:
+        return True
+    leftHeight = height(root.left)
+    rightHeight = height(root.right)
+    
+    if abs(leftHeight-rightHeight) > 1:
+        return False
+    
+    return isbalanced(root.left) and isbalanced(root.right)
+
+def isBalanced_optimised(root):
+    if root == None:
+        return True,0
+    
+    leftIsbalanced, leftHeight = isBalanced_optimised(root.left)
+    rightIsbalanced, rightHeight = isBalanced_optimised(root.right)
+    
+    curretHeight = 1+max(leftHeight,rightHeight)
+    
+    current_balanced = abs(leftHeight - rightHeight)<=1 and leftIsbalanced and rightIsbalanced
+    
+    return current_balanced,curretHeight
+    
     
     
 #root = take_input_levelwise()
@@ -106,6 +131,13 @@ def diameter_of_a_tree(root):
 # root.right = BinaryTreeNode(3)
 # print_level_wise(root)
 # # print_binary_tree(root)
+
+root = BinaryTreeNode(1)
+root.left = BinaryTreeNode(2)
+root.right = BinaryTreeNode(3)
+root.left.left = BinaryTreeNode(4)
+root.left.right = BinaryTreeNode(5)
+root.left.left.left = BinaryTreeNode(8)
 
 root1 = BinaryTreeNode(1)
 root1.left = BinaryTreeNode(2)
@@ -136,5 +168,6 @@ root3.left.left.left = BinaryTreeNode(800)
 root3.left.left.right = BinaryTreeNode(900)
 root3.right.right.left = BinaryTreeNode(1000)
 root3.right.right.right = BinaryTreeNode(1100)
-print_binary_tree(root1)
-print(diameter_of_a_tree(root3))
+# print_binary_tree(root1)
+# print(diameter_of_a_tree(root3))
+print(isBalanced_optimised(root))
